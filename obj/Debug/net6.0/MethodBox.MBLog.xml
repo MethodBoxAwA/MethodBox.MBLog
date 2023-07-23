@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MethodBox.MBLog</name>
+    </assembly>
+    <members>
+        <member name="T:MethodBox.MBLog.DataType">
+            <summary>
+            用于表示MBLogger运行时中的公共数据类型。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.DataType.LogFileType">
+            <summary>
+            用于表示日志存储或来自的文件类型。
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogFileType.TextFile">
+            <summary>
+            表示文本文件（*.txt）
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogFileType.Json">
+            <summary>
+            表示Json文件（*.json）
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogFileType.DataBase">
+            <summary>
+            表示数据库文件（*.db）
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.DataType.LogType">
+            <summary>
+            用于表示日志的等级。
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogType.Information">
+            <summary>
+            表示日志等级为信息
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogType.Caution">
+            <summary>
+            表示日志等级为提示
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogType.Warning">
+            <summary>
+            表示日志等级为警告
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogType.Error">
+            <summary>
+            表示日志等级为错误
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.DataType.LogStruct">
+            <summary>
+            用于表示日志类型的结构体。
+            </summary>
+        </member>
+        <member name="M:MethodBox.MBLog.DataType.LogStruct.#ctor(System.String[],System.String,System.Boolean,System.Boolean)">
+            <summary>
+            提供含有默认值的公开构造函数。
+            </summary>
+            <param name="callerInfoStrings">对日志的调起者</param>
+            <param name="logInfo">日志内容</param>
+            <param name="print">是否打印到控制台</param>
+            <param name="save">是否保存到文件</param>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogStruct.CallerInfoStrings">
+            <summary>
+            表示对日志的调起者
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogStruct.LogInfo">
+            <summary>
+            表示日志的具体内容
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogStruct.Print">
+            <summary>
+            表示是否将日志内容打印至控制台上
+            </summary>
+        </member>
+        <member name="F:MethodBox.MBLog.DataType.LogStruct.Save">
+            <summary>
+            表示是否将日志内容保存至文件
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.DataType.Log">
+            <summary>
+            表示用于序列化/反序列化的<c>Log</c>实体类。
+            </summary>
+        </member>
+        <member name="P:MethodBox.MBLog.DataType.Log.LogContent">
+            <summary>
+            表示日志的内容
+            </summary>
+        </member>
+        <member name="P:MethodBox.MBLog.DataType.Log.LogLevel">
+            <summary>
+            表示日志的等级
+            </summary>
+        </member>
+        <member name="P:MethodBox.MBLog.DataType.Log.DateTime">
+            <summary>
+            表示日志的生成时间
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.Interfaces">
+            <summary>
+            MBLog的公共成员接口类。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.Interfaces.ILogger">
+            <summary>
+            用于定义Logger数据类型的接口。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.Logger">
+            <summary>
+            表示MBLog中的日志系统执行类。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.Logger.LogStringHandler">
+            <summary>
+            表示一个可用于自定义生成日志字符串方法的委托。
+            </summary>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.GetLoggerInstance(MethodBox.MBLog.DataType.LogFileType,System.String)">
+            <summary>
+            以单例模式返回一个Logger的实例化对象。（经过浅拷贝）
+            </summary>
+            <param name="logFileType">表示日志文件类型</param>
+            <param name="logFileName">表示要存储日志的文件</param>
+            <returns>分配的Logger的实例化对象</returns>
+            <example>
+            以下示例将生成一个将日志文件存储"D:\Log\log.txt中的在Logger类型的日志实例化对象。
+            <code>
+            ILogger loggerInstance = GetLoggerInstance(LogFileType.TextFile, @"D:\Log\log.txt");
+            Logger Logger = (Logger)loggerInstance;
+            </code>
+            </example>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.Log(MethodBox.MBLog.DataType.LogType,MethodBox.MBLog.DataType.LogStruct)">
+            <summary>
+            完成进行日志记录的一系列操作事件。
+            </summary>
+            <param name="logType">日志的等级类型</param>
+            <param name="logStruct">日志结构体</param>
+            <example>
+            该示例将生成一个由“Console”提示的、类型为“警告”的日志记录，并将其打印在控制台上，最后存储在D:\Log\log.txt中。
+            <code>
+            ILogger loggerInstance = GetLoggerInstance(LogFileType.TextFile, @"D:\Log\log.txt");
+            LogStruct logStruct = new();
+            logStruct.CallerInfoStrings = new[] { "Console" };
+            logStruct.LogInfo = "用户输入了具有破坏性的指令";
+            logStruct.Save = true;
+            logStruct.Print = true;
+            ((Logger)loggerInstance).Log(LogType.Warning, logStruct);
+            </code>
+            </example>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+            <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.GetTypeString(MethodBox.MBLog.DataType.LogType)">
+            <summary>
+            将LogType类型转换为相应的日志等级的字符串形式。
+            </summary>
+            <param name="_"><c>LogType的实例化对象</c></param>
+            <returns>转换后的日志等级字符串结果</returns>
+            <exception cref="T:System.NotImplementedException">如果传入了错误的LogType枚举值，将引发此异常。</exception>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.WriteToFile(System.Object)">
+            <summary>
+            将生成的日志内容写入指定的文件的缓冲区。
+            </summary>
+            <param name="content">需要写入文件的内容</param>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.FlushBuffer">
+            <summary>
+            将缓冲区内的内容全部写入文件，并清空当前缓冲区。
+            </summary>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.Print(System.String)">
+            <summary>
+            将指定的内容打印在控制台上并重置控制台颜色。
+            </summary>
+            <param name="content">需要打印的内容</param>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.BuildLogString(MethodBox.MBLog.DataType.LogType,MethodBox.MBLog.DataType.LogStruct)">
+            <summary>
+            使用给定的数据以通用日志格式生成格式化字符串，当用户设置了自定义
+            的日志字符串生成方法时，该方法将自动调起含有委托的重载。
+            </summary>
+            <param name="logStruct">输入的日志结构</param>
+            <param name="logType">输入的日志类型</param>
+            <example>
+            以下示例将在2023年7月23日 07:55生成一个来自Console的警告字符串：
+            2023-07-23 07:55:00 [WARNING][Console]用户输入了具有破坏性的指令
+            <code>
+            ILogger loggerInstance = GetLoggerInstance(LogFileType.TextFile,@"D:\Log\log.txt");
+            LogStruct logStruct = new LogStruct();
+            logStruct.CallerInfoStrings = new[] { "Console" };
+            logStruct.LogInfo = "用户输入了具有破坏性的指令";
+            logStruct.Save = true;
+            logStruct.Print = true;
+            string logString = ((Logger)loggerInstance).
+            BuildLogString(LogType.Warning, logStruct);
+            Console.WriteLine(logString);
+            </code>
+            </example>
+            <returns>格式化后的日志字符串</returns>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+            <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
+            <seealso cref="T:MethodBox.MBLog.Logger"/>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.BuildLogString(MethodBox.MBLog.DataType.LogType,MethodBox.MBLog.DataType.LogStruct,MethodBox.MBLog.Logger.LogStringHandler)">
+            <summary>
+            给定一个应用程序方法的扩展，用于定义自定义的日志字符串生成方法。
+            </summary>
+            <param name="logType">输入的日志类型</param>
+            <param name="logStruct">输入的日志结构</param>
+            <param name="handleFunc">处理方法</param>
+            <returns>格式化后的日志字符串</returns>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+            <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
+            <see cref="T:MethodBox.MBLog.Logger.LogStringHandler"/>
+            <seealso cref="T:MethodBox.MBLog.Logger"/>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.SetHandler(MethodBox.MBLog.Logger.LogStringHandler)">
+            <summary>
+            给定一个应用程序方法的扩展，用于给定用户以设置自定义的
+            日志字符串生成方法的实例化委托。
+            </summary>
+            <param name="handleFunc">自定义的日志字符串生成方法</param>
+            <see cref="T:MethodBox.MBLog.Logger.LogStringHandler"/>
+        </member>
+    </members>
+</doc>

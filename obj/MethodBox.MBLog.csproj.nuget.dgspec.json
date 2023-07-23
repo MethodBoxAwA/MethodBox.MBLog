@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MethodBox\\MethodBox.MBLog\\MethodBox.MBLog.csproj": {}
+    "D:\\MethodBox\\Projects\\MethodBox.MBLog\\MethodBox.MBLog.csproj": {}
   },
   "projects": {
-    "D:\\MethodBox\\MethodBox.MBLog\\MethodBox.MBLog.csproj": {
+    "D:\\MethodBox\\Projects\\MethodBox.MBLog\\MethodBox.MBLog.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MethodBox\\MethodBox.MBLog\\MethodBox.MBLog.csproj",
+        "projectUniqueName": "D:\\MethodBox\\Projects\\MethodBox.MBLog\\MethodBox.MBLog.csproj",
         "projectName": "MethodBox.MBLog",
-        "projectPath": "D:\\MethodBox\\MethodBox.MBLog\\MethodBox.MBLog.csproj",
+        "projectPath": "D:\\MethodBox\\Projects\\MethodBox.MBLog\\MethodBox.MBLog.csproj",
         "packagesPath": "C:\\Users\\MethodBox\\.nuget\\packages\\",
-        "outputPath": "D:\\MethodBox\\MethodBox.MBLog\\obj\\",
+        "outputPath": "D:\\MethodBox\\Projects\\MethodBox.MBLog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
