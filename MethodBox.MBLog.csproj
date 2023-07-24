@@ -8,11 +8,13 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
     <LangVersion>10.0</LangVersion>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.2</VersionPrefix>
     <AssemblyName>MethodBox.MBLog</AssemblyName>
     <Authors>MethodBox Studios.</Authors>
     <Title>MBLog</Title>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile></PackageReadmeFile>
+    <PackageTags>Log;Web</PackageTags>
+    <Copyright>2023 MBSoftware</Copyright>
 
   </PropertyGroup>
 
