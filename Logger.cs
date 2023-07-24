@@ -14,14 +14,28 @@ namespace MethodBox.MBLog
         private string _logFileName;
         private DataType.LogFileType _logFileType;
         private StringBuilder _dataBuffer = new();
+        
         /// <summary>
         /// 表示一个可用于自定义生成日志字符串方法的委托。
         /// </summary>
         public delegate string
-            LogStringHandler(LogType logType,LogStruct logStruct);
+            LogStringHandler(LogType logType, LogStruct logStruct);
         private LogStringHandler? _stringHandler;
 
-        private Logger(DataType.LogFileType logFileType, string logFileName)
+        /// <summary>
+        /// 经过构造函数构造一个Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
+        /// Logger实例化对象的单例，除非这个对象已被覆盖。
+        /// </summary>
+        /// <param name="logFileType">日志的存储文件类型</param>
+        /// <param name="logFileName">日志的存储文件名</param>
+        /// <example>
+        /// 以下示例将生成一个新的Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
+        /// Logger实例化对象的单例，除非这个对象已被覆盖。如无必要，勿增实体。
+        /// <code>
+        /// ILogger loggerInstance = Logger(LogFileType.TextFile,@"D:\Log\Log.txt");
+        /// </code>
+        /// </example>
+        public Logger(DataType.LogFileType logFileType, string logFileName)
         {
             this._logFileName = logFileName;
             this._logFileType = logFileType;
@@ -156,7 +170,7 @@ namespace MethodBox.MBLog
             else if (_logFileType == LogFileType.Json)
             {
                 // Content is a class
-                string jsonElement = 
+                string jsonElement =
                     System.Text.Json.JsonSerializer.Serialize
                     <DataType.Log>((Log)content);
                 // Add to buffer
@@ -222,9 +236,9 @@ namespace MethodBox.MBLog
             if (_stringHandler != null)
             {
                 BuildLogString(logType, logStruct, _stringHandler);
-                #pragma warning disable CS8603
+#pragma warning disable CS8603
                 return null;
-                #pragma warning restore CS8603
+#pragma warning restore CS8603
             }
             // Init fields
             string[] callerInfoStrings = logStruct.CallerInfoStrings;
@@ -248,16 +262,31 @@ namespace MethodBox.MBLog
         /// <param name="logType">输入的日志类型</param>
         /// <param name="logStruct">输入的日志结构</param>
         /// <param name="handleFunc">处理方法</param>
+        /// <example>
+        /// 以下示例将在2023年7月23日 07:55生成一个来自Console的警告字符串：
+        /// 2023-07-23 07:55:00 [WARNING][Console]用户输入了具有破坏性的指令
+        /// <code>
+        /// ILogger loggerInstance = GetLoggerInstance(LogFileType.TextFile,@"D:\Log\log.txt");
+        /// LogStruct logStruct = new LogStruct();
+        /// logStruct.CallerInfoStrings = new[] { "Console" };
+        /// logStruct.LogInfo = "用户输入了具有破坏性的指令";
+        /// logStruct.Save = true;
+        /// logStruct.Print = true;
+        /// string logString = ((Logger)loggerInstance).
+        /// BuildLogString(LogType.Warning, logStruct);
+        /// Console.WriteLine(logString);
+        /// </code>
+        /// </example>
         /// <returns>格式化后的日志字符串</returns>
         /// <see cref="LogType"/>
         /// <see cref="LogStruct"/>
         /// <see cref="LogStringHandler"/>
         /// <seealso cref="Logger"/>
-        public string BuildLogString(LogType logType, 
+        public string BuildLogString(LogType logType,
             LogStruct logStruct,
             LogStringHandler handleFunc)
         {
-            return handleFunc(logType,logStruct);
+            return handleFunc(logType, logStruct);
         }
 
         /// <summary>
@@ -265,6 +294,23 @@ namespace MethodBox.MBLog
         /// 日志字符串生成方法的实例化委托。
         /// </summary>
         /// <param name="handleFunc">自定义的日志字符串生成方法</param>
+        /// <example>
+        /// 以下示例将使日志字符串只含有时间和日志内容：
+        /// <code>
+        /// public string HandleLogString(LogType logType, LogStruct logStruct)
+        /// {
+        ///     StringBuilder builder = new StringBuilder();
+        ///     builder.Append(DateTime.Now.ToString("yy-MM-dd HH:mm:ss"));
+        ///     builder.Append($" {logStruct.LogInfo}");
+        ///     return builder.ToString();
+        /// }
+        /// public void OtherMethod()
+        /// {
+        ///     Logger Logger = new Logger(LogFileType.TextFile,@"D:\Log\Log.txt");
+        ///     Logger.SetHandler(HandleLogString);
+        /// }
+        /// </code>
+        /// </example>
         /// <see cref="LogStringHandler"/>
         public void SetHandler(LogStringHandler handleFunc)
         {

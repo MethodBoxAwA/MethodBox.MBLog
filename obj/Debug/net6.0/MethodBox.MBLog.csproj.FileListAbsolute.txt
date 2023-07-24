@@ -1,12 +1,12 @@
-D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.deps.json
-D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.dll
-D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.pdb
-D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.xml
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.csproj.AssemblyReference.cache
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.GeneratedMSBuildEditorConfig.editorconfig
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.AssemblyInfoInputs.cache
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.AssemblyInfo.cs
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.csproj.CoreCompileInputs.cache
+D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.deps.json
+D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.dll
+D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.pdb
+D:\MethodBox\Projects\MethodBox.MBLog\bin\Debug\net6.0\MethodBox.MBLog.xml
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.dll
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\refint\MethodBox.MBLog.dll
 D:\MethodBox\Projects\MethodBox.MBLog\obj\Debug\net6.0\MethodBox.MBLog.xml

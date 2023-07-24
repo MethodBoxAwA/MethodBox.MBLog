@@ -107,5 +107,22 @@
             /// </summary>
             public string? DateTime { get; set; }
         }
+
+        /// <summary>
+        /// 用于表示日志系统的使用事件的事件参数。
+        /// </summary>
+        public class EventArgs
+        {
+            /// <summary>
+            /// 用于表示当日志字符串发送完毕回调事件的事件参数。
+            /// </summary>
+            public class SendStringFinishedEventArgs:System.EventArgs
+            {
+                /// <summary>
+                /// 表示发送完毕后服务器的响应。
+                /// </summary>
+                public string? Response { get; set; }
+            }
+        }
     }
 }

@@ -109,6 +109,21 @@
             表示日志的生成时间
             </summary>
         </member>
+        <member name="T:MethodBox.MBLog.DataType.EventArgs">
+            <summary>
+            用于表示日志系统的使用事件的事件参数。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.DataType.EventArgs.SendStringFinishedEventArgs">
+            <summary>
+            用于表示当日志字符串发送完毕回调事件的事件参数。
+            </summary>
+        </member>
+        <member name="P:MethodBox.MBLog.DataType.EventArgs.SendStringFinishedEventArgs.Response">
+            <summary>
+            表示发送完毕后服务器的响应。
+            </summary>
+        </member>
         <member name="T:MethodBox.MBLog.Interfaces">
             <summary>
             MBLog的公共成员接口类。
@@ -128,6 +143,21 @@
             <summary>
             表示一个可用于自定义生成日志字符串方法的委托。
             </summary>
+        </member>
+        <member name="M:MethodBox.MBLog.Logger.#ctor(MethodBox.MBLog.DataType.LogFileType,System.String)">
+            <summary>
+            经过构造函数构造一个Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
+            Logger实例化对象的单例，除非这个对象已被覆盖。
+            </summary>
+            <param name="logFileType">日志的存储文件类型</param>
+            <param name="logFileName">日志的存储文件名</param>
+            <example>
+            以下示例将生成一个新的Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
+            Logger实例化对象的单例，除非这个对象已被覆盖。如无必要，勿增实体。
+            <code>
+            ILogger loggerInstance = Logger(LogFileType.TextFile,@"D:\Log\Log.txt");
+            </code>
+            </example>
         </member>
         <member name="M:MethodBox.MBLog.Logger.GetLoggerInstance(MethodBox.MBLog.DataType.LogFileType,System.String)">
             <summary>
@@ -224,6 +254,21 @@
             <param name="logType">输入的日志类型</param>
             <param name="logStruct">输入的日志结构</param>
             <param name="handleFunc">处理方法</param>
+            <example>
+            以下示例将在2023年7月23日 07:55生成一个来自Console的警告字符串：
+            2023-07-23 07:55:00 [WARNING][Console]用户输入了具有破坏性的指令
+            <code>
+            ILogger loggerInstance = GetLoggerInstance(LogFileType.TextFile,@"D:\Log\log.txt");
+            LogStruct logStruct = new LogStruct();
+            logStruct.CallerInfoStrings = new[] { "Console" };
+            logStruct.LogInfo = "用户输入了具有破坏性的指令";
+            logStruct.Save = true;
+            logStruct.Print = true;
+            string logString = ((Logger)loggerInstance).
+            BuildLogString(LogType.Warning, logStruct);
+            Console.WriteLine(logString);
+            </code>
+            </example>
             <returns>格式化后的日志字符串</returns>
             <see cref="T:MethodBox.MBLog.DataType.LogType"/>
             <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
@@ -236,7 +281,66 @@
             日志字符串生成方法的实例化委托。
             </summary>
             <param name="handleFunc">自定义的日志字符串生成方法</param>
+            <example>
+            以下示例将使日志字符串只含有时间和日志内容：
+            <code>
+            public string HandleLogString(LogType logType, LogStruct logStruct)
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append(DateTime.Now.ToString("yy-MM-dd HH:mm:ss"));
+                builder.Append($" {logStruct.LogInfo}");
+                return builder.ToString();
+            }
+            public void OtherMethod()
+            {
+                Logger Logger = new Logger(LogFileType.TextFile,@"D:\Log\Log.txt");
+                Logger.SetHandler(HandleLogString);
+            }
+            </code>
+            </example>
             <see cref="T:MethodBox.MBLog.Logger.LogStringHandler"/>
+        </member>
+        <member name="T:MethodBox.MBLog.Web">
+            <summary>
+            表示向网络服务器发送日志或从网络服务器接收日志的执行类。
+            </summary>
+        </member>
+        <member name="T:MethodBox.MBLog.Web.SendStringFinishedEventHandler">
+            <summary>
+            用于定义对于异步化字符串发送方法完成事件的委托签名
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:MethodBox.MBLog.Web.#ctor(System.Uri)">
+            <summary>
+            构造一个日志网络服务的实例化对象。
+            </summary>
+            <param name="sendLogUrl">将日志发送的Uri地址</param>
+        </member>
+        <member name="M:MethodBox.MBLog.Web.SendLogString(System.String,System.String)">
+            <summary>
+            以<c>Post</c>模式发送指定的日志内容。
+            </summary>
+            <param name="key">发起请求的参数名</param>
+            <param name="content">发起请求的参数内容</param>
+            <example>
+            以下示例将生成一条等级为Warning的日志并发送到服务器。
+            <code>
+            Interfaces.ILogger loggerInstance = Logger.GetLoggerInstance
+            (DataType.LogFileType.TextFile, @"D:\Log\Log.txt");
+            Logger logger = (Logger)loggerInstance;
+            DataType.LogStruct logStruct = new DataType.LogStruct();
+            logStruct.LogInfo = "用户删除备份数据";
+            logStruct.CallerInfoStrings = new[] { "Console", "Server" };
+            logStruct.Print = true;
+            logStruct.Save = true;
+            string sendLogString = logger.BuildLogString(DataType.LogType.Warning,logStruct);
+            Web logSender = new Web(new Uri("https:icalloptions.top/data"));
+            logSender.SendLogString("log",sendLogString);
+            </code>
+            <exception cref="T:System.ArgumentNullException">当传入的参数为<c>null</c>时引发此异常。</exception>
+            <returns>服务器的响应字符串</returns>
+            </example>
         </member>
     </members>
 </doc>

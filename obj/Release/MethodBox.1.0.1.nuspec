@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>MethodBox</id>
+    <version>1.0.1</version>
+    <authors>MethodBox</authors>
+    <license type="expression">LGPL-3.0-only</license>
+    <licenseUrl>https://licenses.nuget.org/LGPL-3.0-only</licenseUrl>
+    <projectUrl>https://methodboxawa.github.io/Docs/MethodBox.MBLog</projectUrl>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.2">
+        <dependency id="System.Net.Http" version="4.3.4" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="7.0.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETFramework4.8">
+        <dependency id="System.Net.Http" version="4.3.4" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="7.0.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net6.0">
+        <dependency id="System.Net.Http" version="4.3.4" exclude="Build,Analyzers" />
+        <dependency id="System.Text.Json" version="7.0.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.IO" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Net.Http" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Runtime" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Algorithms" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Encoding" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Primitives" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.X509Certificates" targetFramework=".NETFramework4.7.2, .NETFramework4.8" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net472\MethodBox.dll" target="lib\net472\MethodBox.dll" />
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net472\MethodBox.xml" target="lib\net472\MethodBox.xml" />
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net480\MethodBox.dll" target="lib\net48\MethodBox.dll" />
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net480\MethodBox.xml" target="lib\net48\MethodBox.xml" />
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net6.0\MethodBox.dll" target="lib\net6.0\MethodBox.dll" />
+    <file src="D:\MethodBox\Projects\MethodBox.MBLog\bin\Release\net6.0\MethodBox.xml" target="lib\net6.0\MethodBox.xml" />
+  </files>
+</package>
