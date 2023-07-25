@@ -12,7 +12,9 @@ namespace MethodBox.MBLog
         internal static string Post(string url, Dictionary<string, string> dic)
         {
             string result = "";
+#pragma warning disable SYSLIB0014
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+#pragma warning restore SYSLIB0014
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";
 

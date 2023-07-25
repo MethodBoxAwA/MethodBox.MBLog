@@ -143,6 +143,30 @@
             <summary>
             表示一个可用于自定义生成日志字符串方法的委托。
             </summary>
+            <param name="logType">产生的日志类型</param>
+            <param name="logStruct">产生的日志结构体</param>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+            <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
+        </member>
+        <member name="T:MethodBox.MBLog.Logger.DangerousLogHandler">
+            <summary>
+            表示当产生警告和错误等级的日志时引发的事件所对应的委托签名。
+            </summary>
+            <param name="logType">产生的日志类型</param>
+            <param name="logStruct">产生的日志结构体</param>
+            <see cref="T:MethodBox.MBLog.DataType.LogType"/>
+            <see cref="T:MethodBox.MBLog.DataType.LogStruct"/>
+            <seealso cref="M:MethodBox.MBLog.Logger.Log(MethodBox.MBLog.DataType.LogType,MethodBox.MBLog.DataType.LogStruct)"/>
+        </member>
+        <member name="E:MethodBox.MBLog.Logger.OnDangerousLogGenerate">
+            <summary>
+            表示当产生警告和错误等级的日志但未经过打印和保存处理时引发的事件。
+            </summary>
+        </member>
+        <member name="E:MethodBox.MBLog.Logger.DangerousLogGenerated">
+            <summary>
+            表示当产生警告和错误等级的日志但经过打印和保存处理后引发的事件。
+            </summary>
         </member>
         <member name="M:MethodBox.MBLog.Logger.#ctor(MethodBox.MBLog.DataType.LogFileType,System.String)">
             <summary>
@@ -307,9 +331,15 @@
         </member>
         <member name="T:MethodBox.MBLog.Web.SendStringFinishedEventHandler">
             <summary>
-            用于定义对于异步化字符串发送方法完成事件的委托签名
+            用于定义对于异步化字符串发送方法完成事件的委托签名。
             </summary>
-            <returns></returns>
+            <param name="sender">调用该委托定义事件的主调方</param>
+            <param name="e">返回的结果所对应的事件参数</param>
+        </member>
+        <member name="E:MethodBox.MBLog.Web.OnDataSendFinished">
+            <summary>
+            表示于异步化字符串发送方法完成后引发的事件。
+            </summary>
         </member>
         <member name="M:MethodBox.MBLog.Web.#ctor(System.Uri)">
             <summary>
@@ -338,9 +368,59 @@
             Web logSender = new Web(new Uri("https:icalloptions.top/data"));
             logSender.SendLogString("log",sendLogString);
             </code>
-            <exception cref="T:System.ArgumentNullException">当传入的参数为<c>null</c>时引发此异常。</exception>
+            <exception cref="T:System.ArgumentNullException">（仅限于.Net6.0及以上SDK版本）当传入的参数为<c>null</c>时引发此异常。</exception>
             <returns>服务器的响应字符串</returns>
             </example>
+        </member>
+        <member name="M:MethodBox.MBLog.Web.SendLogStringAsync(System.String,System.String)">
+            <summary>
+            以异步<c>Post</c>模式发送指定的日志内容。
+            </summary>
+            <param name="key">发起请求的参数名</param>
+            <param name="content">发起请求的参数内容</param>
+            <example>
+            以下示例将日志内容异步上传至服务器，并以日志的形式通知上传结果。
+            <code>
+            // 构建日志字符串
+            Interfaces.ILogger loggerInstance =
+            MBLog.Logger.GetLoggerInstance(DataType.LogFileType.TextFile,@"D:\Log");
+            Logger Logger = (MBLog.Logger)loggerInstance;
+            string logResult =
+            Logger.BuildLogString(DataType.LogType.Warning, new DataType.LogStruct(
+                new[] { "Console" }, "nm$l", true, true
+            ));
+            // 建立网络实例化对象
+            Web WebSender = new Web(new Uri(@"https:icalloptions.top/data"));
+            // 订阅相关事件
+            WebSender.OnDataSendFinished += (s, e) =&gt;
+            {
+            #if NET6_0_OR_GREATER
+                ArgumentNullException.ThrowIfNull(e.Response);
+            #else
+                if (e.Response is null)
+                {
+                    throw new ArgumentException("服务器未返回");
+                }
+            #endif
+                DataType.LogStruct webLogStruct = new DataType.LogStruct();
+                webLogStruct.LogInfo = e.Response;
+                webLogStruct.CallerInfoStrings = new[] { "Console", "Web" };
+                webLogStruct.Print = true;
+                webLogStruct.Save = true;
+                // 作为演示，假设成功返回OK，失败返回FAILED
+                DataType.LogType logType = e.Response switch
+                {
+                    "OK" => DataType.LogType.Information,
+                    "FAILED" => DataType.LogType.Warning,
+                    _ => throw new NotImplementedException("未实现对该返回值的处理！")
+                };
+                Logger.Log(logType, webLogStruct);
+            };
+            // 发送信息
+            WebSender.SendLogStringAsync("LogContent",logResult);
+            </code>
+            </example>
+            <exception cref="T:System.ArgumentNullException">（仅限于.Net6.0及以上SDK版本）当传入的参数为<c>null</c>时引发此异常。</exception>
         </member>
     </members>
 </doc>

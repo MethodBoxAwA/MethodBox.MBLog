@@ -14,13 +14,36 @@ namespace MethodBox.MBLog
         private string _logFileName;
         private DataType.LogFileType _logFileType;
         private StringBuilder _dataBuffer = new();
-        
+
         /// <summary>
         /// 表示一个可用于自定义生成日志字符串方法的委托。
         /// </summary>
+        /// <param name="logType">产生的日志类型</param>
+        /// <param name="logStruct">产生的日志结构体</param>
+        /// <see cref="LogType"/>
+        /// <see cref="LogStruct"/>
         public delegate string
             LogStringHandler(LogType logType, LogStruct logStruct);
         private LogStringHandler? _stringHandler;
+
+        /// <summary>
+        /// 表示当产生警告和错误等级的日志时引发的事件所对应的委托签名。
+        /// </summary>
+        /// <param name="logType">产生的日志类型</param>
+        /// <param name="logStruct">产生的日志结构体</param>
+        /// <see cref="LogType"/>
+        /// <see cref="LogStruct"/>
+        /// <seealso cref="Logger.Log"/>
+        public delegate void DangerousLogHandler(LogType logType, LogStruct logStruct);
+
+        /// <summary>
+        /// 表示当产生警告和错误等级的日志但未经过打印和保存处理时引发的事件。
+        /// </summary>
+        public event DangerousLogHandler OnDangerousLogGenerate;
+        /// <summary>
+        /// 表示当产生警告和错误等级的日志但经过打印和保存处理后引发的事件。
+        /// </summary>
+        public event DangerousLogHandler DangerousLogGenerated;
 
         /// <summary>
         /// 经过构造函数构造一个Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
@@ -97,9 +120,11 @@ namespace MethodBox.MBLog
             {
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
+                    OnDangerousLogGenerate?.Invoke(logType,logStruct);
                     break;
                 case LogType.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                    OnDangerousLogGenerate?.Invoke(logType, logStruct);
                     break;
                 case LogType.Caution:
                     Console.ForegroundColor = ConsoleColor.Cyan;
@@ -137,6 +162,8 @@ namespace MethodBox.MBLog
                 default:
                     throw new ArgumentException("传入了错误的行动类型");
             }
+            // Call specific event
+            DangerousLogGenerated?.Invoke(logType, logStruct);
         }
 
         /// <summary>
