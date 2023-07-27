@@ -5,12 +5,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MethodBox.MBLog
+namespace MethodBox.MBLog.Web
 {
     /// <summary>
     /// 表示向网络服务器发送日志或从网络服务器接收日志的执行类。
     /// </summary>
-    public class Web
+    public class WebRequest
     {
         private Uri _sendLogUrl;
         /// <summary>
@@ -30,7 +30,7 @@ namespace MethodBox.MBLog
         /// 构造一个日志网络服务的实例化对象。
         /// </summary>
         /// <param name="sendLogUrl">将日志发送的Uri地址</param>
-        public Web(Uri sendLogUrl)
+        public WebRequest(Uri sendLogUrl)
         {
             this._sendLogUrl = sendLogUrl;
         }
@@ -52,7 +52,7 @@ namespace MethodBox.MBLog
         /// logStruct.Print = true;
         /// logStruct.Save = true;
         /// string sendLogString = logger.BuildLogString(DataType.LogType.Warning,logStruct);
-        /// Web logSender = new Web(new Uri("https:icalloptions.top/data"));
+        /// WebRequest logSender = new WebRequest(new Uri("https:icalloptions.top/data"));
         /// logSender.SendLogString("log",sendLogString);
         /// </code>
         /// <exception cref="ArgumentNullException">（仅限于.Net6.0及以上SDK版本）当传入的参数为<c>null</c>时引发此异常。</exception>
@@ -89,9 +89,9 @@ namespace MethodBox.MBLog
         ///     new[] { "Console" }, "nm$l", true, true
         /// ));
         /// // 建立网络实例化对象
-        /// Web WebSender = new Web(new Uri(@"https:icalloptions.top/data"));
+        /// WebRequest WebSender = new WebRequest(new Uri(@"https:icalloptions.top/data"));
         /// // 订阅相关事件
-        /// WebSender.OnDataSendFinished += (s, e) =&gt;
+        /// WebSender.OnDataSendFinished += (s, e) =>
         /// {
         /// #if NET6_0_OR_GREATER
         ///     ArgumentNullException.ThrowIfNull(e.Response);
@@ -103,7 +103,7 @@ namespace MethodBox.MBLog
         /// #endif
         ///     DataType.LogStruct webLogStruct = new DataType.LogStruct();
         ///     webLogStruct.LogInfo = e.Response;
-        ///     webLogStruct.CallerInfoStrings = new[] { "Console", "Web" };
+        ///     webLogStruct.CallerInfoStrings = new[] { "Console", "WebRequest" };
         ///     webLogStruct.Print = true;
         ///     webLogStruct.Save = true;
         ///     // 作为演示，假设成功返回OK，失败返回FAILED
@@ -147,6 +147,7 @@ namespace MethodBox.MBLog
                 OnDataSendFinished?.Invoke(this, e);
             }
         }
+            
 
     }
 }

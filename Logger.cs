@@ -1,9 +1,14 @@
-﻿using System.Text;
+﻿using System.Runtime;
+using System.Text;
+using MethodBox.MBLog.DataType;
 using static MethodBox.MBLog.Interfaces;
-using static MethodBox.MBLog.DataType;
+using EventArgs = MethodBox.MBLog.DataType.EventArgs;
 
-namespace MethodBox.MBLog
+namespace MethodBox.MBLog.Logging
 {
+    ///<namespace>
+    /// <summary>aaa</summary>
+    /// </namespace>
     /// <summary>
     /// 表示MBLog中的日志系统执行类。
     /// </summary>
@@ -29,21 +34,33 @@ namespace MethodBox.MBLog
         /// <summary>
         /// 表示当产生警告和错误等级的日志时引发的事件所对应的委托签名。
         /// </summary>
-        /// <param name="logType">产生的日志类型</param>
-        /// <param name="logStruct">产生的日志结构体</param>
+        /// <param name="sender">发起调用的对象</param>
+        /// <param name="e">包含危险日志信息的事件参数</param>
         /// <see cref="LogType"/>
         /// <see cref="LogStruct"/>
         /// <seealso cref="Logger.Log"/>
-        public delegate void DangerousLogHandler(LogType logType, LogStruct logStruct);
+        public delegate void DangerousLogHandler(object sender,
+            EventArgs.DangerousLogGenerateEventArgs e);
 
         /// <summary>
         /// 表示当产生警告和错误等级的日志但未经过打印和保存处理时引发的事件。
         /// </summary>
-        public event DangerousLogHandler OnDangerousLogGenerate;
+        public event DangerousLogHandler? OnDangerousLogGenerate;
         /// <summary>
         /// 表示当产生警告和错误等级的日志但经过打印和保存处理后引发的事件。
         /// </summary>
-        public event DangerousLogHandler DangerousLogGenerated;
+        public event DangerousLogHandler? DangerousLogGenerated;
+
+        /// <summary>
+        /// 表示当产生捕获到指定类型的日志时引发的事件所对应的委托签名。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void DataTrackHandler(object sender, EventArgs.LogTrackEventArgs e);
+        /// <summary>
+        /// 表示当产生捕获到指定类型的日志时引发的事件。
+        /// </summary>
+        public event DataTrackHandler? OnCatchSpecificEvent;
 
         /// <summary>
         /// 经过构造函数构造一个Logger实例化对象。请注意：请尽可能使用<c>GetLoggerInstance</c>方法生成
@@ -65,7 +82,7 @@ namespace MethodBox.MBLog
         }
 
         /// <summary>
-        /// 以单例模式返回一个Logger的实例化对象。（经过浅拷贝）
+        /// 以单例模式返回一个Logger的实例化对象。（经过深拷贝）
         /// </summary>
         /// <param name="logFileType">表示日志文件类型</param>
         /// <param name="logFileName">表示要存储日志的文件</param>
@@ -91,7 +108,10 @@ namespace MethodBox.MBLog
 
                 }
             }
-            return _logger;
+            Logger loggerClone = (Logger)((Logger)_logger).MemberwiseClone();
+            loggerClone._logFileName = logFileName;
+            loggerClone._logFileType = logFileType;
+            return loggerClone;
         }
 
         /// <summary>
@@ -110,6 +130,50 @@ namespace MethodBox.MBLog
         /// logStruct.Print = true;
         /// ((Logger)loggerInstance).Log(LogType.Warning, logStruct);
         /// </code>
+        /// 以下示例将通过订阅事件的方式捕获类型为Warning和Error的日志，并将其发送至网络服务器
+        /// 上，并将发送结果以日志的方式处理。
+        /// <code>
+        /// // 获取一个日志类的实例化对象
+        /// Interfaces.ILogger loggerInstance =
+        /// MBLog.Logger.GetLoggerInstance(DataType.LogFileType.TextFile, @"D:\Log");
+        /// Logger Logger = (MBLog.Logger)loggerInstance;
+        /// // 订阅危险日志事件
+        /// Logger.OnDangerousLogGenerate += (o, v) =>
+        /// {
+        ///     // 构建日志字符串
+        ///     string logResult =
+        ///     Logger.BuildLogString(v.EventLogType, v.EventLogStruct);
+        ///     // 建立网络实例化对象
+        ///     WebRequest WebSender = new WebRequest(new Uri(@"https:icalloptions.top/data"));
+        ///     // 订阅相关事件
+        ///     WebSender.OnDataSendFinished += (s, e) =>
+        ///     {
+        /// #if NET6_0_OR_GREATER
+        ///         ArgumentNullException.ThrowIfNull(e.Response);
+        /// #else
+        ///         if (e.Response is null)
+        ///         {
+        ///             throw new ArgumentException("服务器未返回");
+        ///         }
+        /// #endif
+        ///         DataType.LogStruct webLogStruct = new DataType.LogStruct();
+        ///         webLogStruct.LogInfo = e.Response;
+        ///         webLogStruct.CallerInfoStrings = new[] { "Console", "WebRequest" };
+        ///         webLogStruct.Print = true;
+        ///         webLogStruct.Save = true;
+        ///         // 作为演示，假设成功返回OK，失败返回FAILED
+        ///         DataType.LogType logType = e.Response switch
+        ///         {
+        ///             "OK" => DataType.LogType.Information,
+        ///             "FAILED" => DataType.LogType.Warning,
+        ///             _ => throw new NotImplementedException("未实现对该返回值的处理！")
+        ///         };
+        ///         Logger.Log(logType, webLogStruct);
+        ///     };
+        ///     // 发送信息
+        ///     WebSender.SendLogStringAsync("LogContent", logResult);
+        /// };
+        /// </code>
         /// </example>
         /// <see cref="LogType"/>
         /// <see cref="LogStruct"/>
@@ -120,11 +184,26 @@ namespace MethodBox.MBLog
             {
                 case LogType.Error:
                     Console.ForegroundColor = ConsoleColor.Red;
-                    OnDangerousLogGenerate?.Invoke(logType,logStruct);
+                    DataType.EventArgs.DangerousLogGenerateEventArgs e = new()
+                    {
+                        EventLogType = logType,
+                        EventLogStruct = logStruct
+                    };
+                    OnDangerousLogGenerate?.Invoke(this, e);
+                    EventArgs.LogTrackEventArgs E = new EventArgs.LogTrackEventArgs();
+                    E.EventLogStruct = e.EventLogStruct;
+                    E.EventLogType = e.EventLogType;
+                    OnCatchSpecificEvent?.Invoke(this, E);
+                    // OnDangerousLogGenerate?.Invoke(logType,logStruct);
                     break;
                 case LogType.Warning:
+                    e = new()
+                    {
+                        EventLogType = logType,
+                        EventLogStruct = logStruct
+                    };
+                    OnDangerousLogGenerate?.Invoke(this, e);
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    OnDangerousLogGenerate?.Invoke(logType, logStruct);
                     break;
                 case LogType.Caution:
                     Console.ForegroundColor = ConsoleColor.Cyan;
@@ -163,7 +242,12 @@ namespace MethodBox.MBLog
                     throw new ArgumentException("传入了错误的行动类型");
             }
             // Call specific event
-            DangerousLogGenerated?.Invoke(logType, logStruct);
+            DataType.EventArgs.DangerousLogGenerateEventArgs v = new()
+            {
+                EventLogType = logType,
+                EventLogStruct = logStruct
+            };
+            DangerousLogGenerated?.Invoke(this, v);
         }
 
         /// <summary>

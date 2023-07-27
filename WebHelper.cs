@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MethodBox.MBLog
+namespace MethodBox.MBLog.Web
 {
     internal class WebHelper
     {
@@ -13,7 +13,7 @@ namespace MethodBox.MBLog
         {
             string result = "";
 #pragma warning disable SYSLIB0014
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
+            HttpWebRequest req = (HttpWebRequest)System.Net.WebRequest.Create(url);
 #pragma warning restore SYSLIB0014
             req.Method = "POST";
             req.ContentType = "application/x-www-form-urlencoded";

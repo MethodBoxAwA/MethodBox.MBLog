@@ -7,14 +7,15 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
-    <LangVersion>10.0</LangVersion>
-    <VersionPrefix>1.0.2</VersionPrefix>
+    <LangVersion>11.0</LangVersion>
+    <VersionPrefix>1.0.4</VersionPrefix>
     <AssemblyName>MethodBox.MBLog</AssemblyName>
     <Authors>MethodBox Studios.</Authors>
     <Title>MBLog</Title>
     <PackageReadmeFile></PackageReadmeFile>
     <PackageTags>Log;Web</PackageTags>
     <Copyright>2023 MBSoftware</Copyright>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
 
   </PropertyGroup>
 

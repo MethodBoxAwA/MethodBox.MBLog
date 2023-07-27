@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shfbBuild product="Sandcastle Help File Builder and Tools" version="2023.7.8.0" projectFile="C:\Users\MethodBox\Documents\obj\AimPlanner.shfbproj" started="2023/7/25 11:42:13">
+<shfbBuild product="Sandcastle Help File Builder and Tools" version="2023.7.8.0" projectFile="C:\Users\MethodBox\Documents\obj\AimPlanner.shfbproj" started="2023/7/27 12:51:51">
 <buildStep step="Initializing">
 The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder&#39;
 Locating components in the following folder(s):
@@ -25,17 +25,17 @@ Copying XML comments files
 </buildStep>
 <buildStep step="GenerateSharedContent">
 Generating shared content files (zh-CN, 中文(简体，中国))...
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0000
 </buildStep>
 <buildStep step="GenerateApiFilter">
 Generating API filter for MRefBuilder...
-    Last step completed in 00:00:00.0045
+    Last step completed in 00:00:00.0030
 </buildStep>
 <buildStep step="GenerateReflectionInfo">
 Generating reflection information...
-[C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe - GenerateRefInfo-e50ba31d-7be5-4bc2-8008-2e16a323a87d.proj]
-生成启动时间为 2023/7/25 11:42:13。
-节点 1 上的项目“C:\Users\MethodBox\Documents\obj\Help\Working\GenerateRefInfo-e50ba31d-7be5-4bc2-8008-2e16a323a87d.proj”(默认目标)。
+[C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\MSBuild\Current\Bin\MSBuild.exe - GenerateRefInfo-a1ebb63a-9e8d-4446-a824-ef261e3ac06d.proj]
+生成启动时间为 2023/7/27 12:51:52。
+节点 1 上的项目“C:\Users\MethodBox\Documents\obj\Help\Working\GenerateRefInfo-a1ebb63a-9e8d-4446-a824-ef261e3ac06d.proj”(默认目标)。
 PrepareForBuild:
   正在创建目录“obj\Debug\”。
 GenerateBindingRedirects:
@@ -45,27 +45,27 @@ GenerateRefInfo:
   ? Microsoft Corporation. All rights reserved.
   No source code context base path specified.  Source context information is unavailable.
   Loaded 1 assemblies for reflection and 1 dependency assemblies.
-  Wrote information on 1 namespaces, 14 types, and 33 members
+  Wrote information on 4 namespaces, 19 types, and 49 members
   Merging duplicate type and member information
   Merged 0 duplicate type(s) and 0 duplicate member(s)
-已完成生成项目“C:\Users\MethodBox\Documents\obj\Help\Working\GenerateRefInfo-e50ba31d-7be5-4bc2-8008-2e16a323a87d.proj”(默认目标)的操作。
-    Last step completed in 00:00:00.3185
+已完成生成项目“C:\Users\MethodBox\Documents\obj\Help\Working\GenerateRefInfo-a1ebb63a-9e8d-4446-a824-ef261e3ac06d.proj”(默认目标)的操作。
+    Last step completed in 00:00:00.3234
 </buildStep>
 <buildStep step="ApplyDocumentModel">
 Applying document model to reflection output...
-    Last step completed in 00:00:00.0105
+    Last step completed in 00:00:00.0113
 </buildStep>
 <buildStep step="AddApiTopicFilenames">
 Adding topic filenames to API members...
-    Last step completed in 00:00:00.0121
+    Last step completed in 00:00:00.0181
 </buildStep>
 <buildStep step="GenerateApiTopicManifest">
 Generating API topic manifest...
-    Last step completed in 00:00:00.0105
+    Last step completed in 00:00:00.0152
 </buildStep>
 <buildStep step="GenerateNamespaceSummaries">
 Generating namespace summary information...
-    Last step completed in 00:00:00.0010
+    Last step completed in 00:00:00.0019
 </buildStep>
 <buildStep step="CopyAdditionalContent">
 Copying additional content files...
@@ -79,11 +79,11 @@ Merging conceptual and additional tables of contents...
 <buildStep step="GenerateIntermediateTableOfContents">
 Generating intermediate table of contents file for API content...
 Generating conceptual content intermediate TOC file...
-    Last step completed in 00:00:00.0085
+    Last step completed in 00:00:00.0117
 </buildStep>
 <buildStep step="CreateBuildAssemblerConfigs">
 Creating Sandcastle configuration files...
-    Last step completed in 00:00:00.0235
+    Last step completed in 00:00:00.0255
 </buildStep>
 <buildStep step="CombiningIntermediateTocFiles">
 Combining conceptual and API intermediate TOC files...
@@ -94,7 +94,7 @@ Merging custom build component configurations
 C:\Users\MethodBox\Documents\obj\Help\Working\BuildAssembler.config
   Updating reference topic configurations.
   No conceptual content.  Removing conceptual content components.
-    Last step completed in 00:00:00.0085
+    Last step completed in 00:00:00.0108
 </buildStep>
 <buildStep step="BuildTopics">
 Building help topics...
@@ -103,16 +103,18 @@ Loading TOC info and adding unique IDs to parent nodes
 </plugIn>Loading configuration...
 Processing topics...
 SHFB: Warning BE0066: ShowMissingComponent: [N:MethodBox.MBLog] Missing &lt;summary&gt; documentation
-SHFB: Warning BE0066: ShowMissingComponent: [M:MethodBox.MBLog.Web.SendLogString(System.String,System.String)] Missing &lt;returns&gt; documentation
-TopicTransformation: [M:MethodBox.MBLog.Web.SendLogString(System.String,System.String)] Unhandled transformation element: exception  Parent element: example
-Processed 54 topic(s)
-2 warning(s)
+SHFB: Warning BE0066: ShowMissingComponent: [N:MethodBox.MBLog.DataType] Missing &lt;summary&gt; documentation
+SHFB: Warning BE0066: ShowMissingComponent: [N:MethodBox.MBLog.Logging] Missing &lt;summary&gt; documentation
+SHFB: Warning BE0066: ShowMissingComponent: [N:MethodBox.MBLog.Web] Missing &lt;summary&gt; documentation
+SHFB: Warning BE0066: ShowMissingComponent: [M:MethodBox.MBLog.Web.WebRequest.SendLogString(System.String,System.String)] Missing &lt;returns&gt; documentation
+TopicTransformation: [M:MethodBox.MBLog.Web.WebRequest.SendLogString(System.String,System.String)] Unhandled transformation element: exception  Parent element: example
+Processed 80 topic(s)
+5 warning(s)
 CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 2 of 15.
 CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 2 of 30.
-ResolveReferenceLinksComponent: 3 entries added to the member ID URL cache.  New cache size: 17 entries
 <plugIn name="Website Table of Contents Generator" behavior="After" priority="1000">
 Generating TOC fragment files
-</plugIn>    Last step completed in 00:00:00.7741
+</plugIn>    Last step completed in 00:00:00.8536
 </buildStep>
 <buildStep step="CopyStandardHelpContent">
 Copying standard help content...
@@ -148,26 +150,26 @@ C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Components\Defaul
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Components\Default2022\RootWebsiteContent\SearchHelp.inc.php -&gt; C:\Users\MethodBox\Documents\obj\Help\Working\Output\Website\SearchHelp.inc.php
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Components\Default2022\RootWebsiteContent\SearchHelp.php -&gt; C:\Users\MethodBox\Documents\obj\Help\Working\Output\Website\SearchHelp.php
 C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\Components\Default2022\RootWebsiteContent\Web.Config -&gt; C:\Users\MethodBox\Documents\obj\Help\Working\Output\Website\Web.Config
-    Last step completed in 00:00:00.0130
+    Last step completed in 00:00:00.0163
 </buildStep>
 <buildStep step="GenerateFullTextIndex">
 Generating full-text index for the website...
 
-    Last step completed in 00:00:00.0295
+    Last step completed in 00:00:00.0430
 </buildStep>
 <buildStep step="CopyingWebsiteFiles">
 Copying website files to output folder...
 
-Copied 194 files for the website content
-    Last step completed in 00:00:00.0640
+Copied 239 files for the website content
+    Last step completed in 00:00:00.0880
 </buildStep>
 <buildStep step="CleanIntermediates">
 Removing intermediate files...
-    Last step completed in 00:00:00.0140
+    Last step completed in 00:00:00.0176
 </buildStep>
 <buildStep step="Completed">
 
-Build completed successfully at 2023/7/25 11:42:14.  Total time: 00:00:01.5225
+Build completed successfully at 2023/7/27 12:51:53.  Total time: 00:00:01.6710
 
 </buildStep>
 </shfbBuild>
